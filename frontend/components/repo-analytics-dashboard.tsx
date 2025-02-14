@@ -427,7 +427,6 @@ function calculateCodebaseGrade(data: RepoData) {
             </div>
           </main>
           <footer className="absolute bottom-0 w-full text-center text-xs text-muted-foreground py-4">
-            powered by <a href="https://codegen.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">Codegen</a> ⚡
           </footer>
         </>
       )}
