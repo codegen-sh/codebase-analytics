@@ -9,7 +9,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 
-// Mock data for the dashboard
 const mockRepoData = {
   name: "vercel/next.js",
   description: "The React Framework for the Web",
@@ -18,15 +17,14 @@ const mockRepoData = {
   depthOfInheritance: 3.2,
   halsteadVolume: 987654,
   maintainabilityIndex: 85,
-  commentDensity: 18.5, // Percentage of comments
-  sloc: 132456, // Source Lines of Code
-  lloc: 98765, // Logical Lines of Code
-  numberOfFiles: 1200, // Example value
-  numberOfFunctions: 4500, // Example value
-  numberOfClasses: 300, // Example value
+  commentDensity: 18.5,
+  sloc: 132456,
+  lloc: 98765,
+  numberOfFiles: 1200,
+  numberOfFunctions: 4500,
+  numberOfClasses: 300,
 }
 
-// Mock data for monthly commits over the last 12 months
 const mockCommitData = [
   { month: "October", commits: 130 },
   { month: "September", commits: 150 },
@@ -92,7 +90,6 @@ export default function RepoAnalyticsDashboard() {
   const [isLandingPage, setIsLandingPage] = useState(true)
 
   const parseRepoUrl = (input: string): string => {
-    // If it's a GitHub URL, extract owner/repo
     if (input.includes('github.com')) {
       const url = new URL(input);
       const pathParts = url.pathname.split('/').filter(Boolean);
@@ -100,7 +97,6 @@ export default function RepoAnalyticsDashboard() {
         return `${pathParts[0]}/${pathParts[1]}`;
       }
     }
-    // Otherwise assume it's already in owner/repo format
     return input;
   };
 
@@ -129,7 +125,6 @@ export default function RepoAnalyticsDashboard() {
 
       const data: RepoAnalyticsResponse = await response.json();
       
-      // Transform API response to match RepoData structure
       setRepoData({
         name: parsedRepoUrl,
         description: data.description,
@@ -178,11 +173,9 @@ export default function RepoAnalyticsDashboard() {
     }
   }
 
-// Function to calculate the codebase grade
 function calculateCodebaseGrade(data: RepoData) {
   const { maintainabilityIndex } = data;
   
-  // School-style grading based on maintainability index
   if (maintainabilityIndex >= 90) return 'A+';
   if (maintainabilityIndex >= 85) return 'A';
   if (maintainabilityIndex >= 80) return 'A-';

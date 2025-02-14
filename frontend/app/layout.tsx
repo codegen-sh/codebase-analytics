@@ -5,9 +5,8 @@ import type React from "react" // Import React
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  title: "Repository Analytics Dashboard",
+  title: "Codebase Analytics Dashboard",
   description: "Analytics dashboard for public GitHub repositories",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({

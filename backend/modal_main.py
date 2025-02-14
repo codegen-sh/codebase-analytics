@@ -29,15 +29,14 @@ image = (
 
 app = modal.App(name="analytics-app", image=image)
 
-# uvicorn main:app --host 0.0.0.0 --port 8000
 fastapi_app = FastAPI()
 
 fastapi_app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Replace with your frontend URL
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -51,41 +50,32 @@ def get_monthly_commits(repo_path: str) -> Dict[str, int]:
     Returns:
         Dictionary with month-year as key and number of commits as value
     """
-    # Calculate date range
     end_date = datetime.now()
     start_date = end_date - timedelta(days=365)
 
-    # Format dates for git log
     date_format = "%Y-%m-%d"
     since_date = start_date.strftime(date_format)
     until_date = end_date.strftime(date_format)
     repo_path = "https://github.com/" + repo_path
 
     try:
-        # Store the original working directory
         original_dir = os.getcwd()
 
-        # Create a temporary directory
         with tempfile.TemporaryDirectory() as temp_dir:
-            # Clone the repository into the temporary directory
             subprocess.run(["git", "clone", repo_path, temp_dir], check=True)
-
-            # Change to the cloned repo directory
             os.chdir(temp_dir)
 
-            # Get git log with dates
             cmd = [
                 "git",
                 "log",
                 f"--since={since_date}",
                 f"--until={until_date}",
-                "--format=%aI",  # ISO 8601-like format
+                "--format=%aI",
             ]
 
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             commit_dates = result.stdout.strip().split("\n")
 
-            # Initialize monthly counts
             monthly_counts = {}
             current_date = start_date
             while current_date <= end_date:
@@ -95,7 +85,6 @@ def get_monthly_commits(repo_path: str) -> Dict[str, int]:
                     current_date.replace(day=1) + timedelta(days=32)
                 ).replace(day=1)
 
-            # Count commits per month
             for date_str in commit_dates:
                 if date_str:  # Skip empty lines
                     commit_date = datetime.fromisoformat(date_str.strip())
@@ -103,7 +92,6 @@ def get_monthly_commits(repo_path: str) -> Dict[str, int]:
                     if month_key in monthly_counts:
                         monthly_counts[month_key] += 1
 
-            # Change back to the original directory before returning
             os.chdir(original_dir)
             return dict(sorted(monthly_counts.items()))
 
@@ -114,7 +102,6 @@ def get_monthly_commits(repo_path: str) -> Dict[str, int]:
         print(f"Error processing git commits: {e}")
         return {}
     finally:
-        # Ensure we always change back to the original directory, even if an error occurs
         try:
             os.chdir(original_dir)
         except:
@@ -342,7 +329,6 @@ def get_github_repo_description(repo_url):
         return ""
 
 
-# Request model
 class RepoRequest(BaseModel):
     repo_url: str
 
@@ -353,7 +339,7 @@ async def analyze_repo(request: RepoRequest) -> Dict[str, Any]:
     repo_url = request.repo_url
     codebase = Codebase.from_repo(repo_url)
 
-    num_files = len(codebase.files(extensions="*"))  # Get all files
+    num_files = len(codebase.files(extensions="*"))
     num_functions = len(codebase.functions)
     num_classes = len(codebase.classes)
 
