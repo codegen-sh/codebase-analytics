@@ -114,7 +114,7 @@ export default function RepoAnalyticsDashboard() {
     setIsLandingPage(false);
     
     try {
-      const response = await fetch('http://localhost:8000/analyze_repo', {
+      const response = await fetch('https://codegen-sh-staging--analytics-app-fastapi-modal-app.modal.run/analyze_repo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
