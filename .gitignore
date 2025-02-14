@@ -2,3 +2,4 @@
 /frontend/.next
 /frontend/build
 /backend/.venv
+/backend/__pycache__

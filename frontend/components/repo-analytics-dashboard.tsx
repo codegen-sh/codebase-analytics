@@ -110,6 +110,9 @@ export default function RepoAnalyticsDashboard() {
     setIsLandingPage(false);
     
     try {
+      console.log("Fetching repo data...");
+      // https://codegen-sh-staging--analytics-app-fastapi-modal-app.modal.run/analyze_repo
+      // https://codegen-sh-staging--analytics-app-fastapi-modal-app-dev.modal.run/analyze_repo
       const response = await fetch('https://codegen-sh-staging--analytics-app-fastapi-modal-app.modal.run/analyze_repo', {
         method: 'POST',
         headers: {
@@ -207,11 +210,12 @@ function calculateCodebaseGrade(data: RepoData) {
           <div className="flex items-center gap-3 w-full max-w-lg">
             <Input
               type="text"
-              placeholder="Enter the GitHub repo link or in the format of owner/repo"
+              placeholder="Enter the GitHub repo link or owner/repo"
               value={repoUrl}
               onChange={(e) => setRepoUrl(e.target.value)}
               onKeyPress={handleKeyPress}
               className="flex-1"
+              title="Format: https://github.com/owner/repo or owner/repo"
             />
             <Button 
               onClick={handleFetchRepo} 
@@ -220,6 +224,9 @@ function calculateCodebaseGrade(data: RepoData) {
               {isLoading ? "Loading..." : "Analyze"}
             </Button>
           </div>
+          <footer className="absolute bottom-0 w-full text-center text-xs text-muted-foreground py-4">
+            built with <a href="https://codegen.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">Codegen</a>
+          </footer>
         </div>
       ) : isLoading ? (
         <div className="flex flex-col items-center justify-center min-h-screen">
@@ -230,7 +237,7 @@ function calculateCodebaseGrade(data: RepoData) {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
         </div>
       ) : (
-        <>
+        <div className="flex flex-col min-h-screen">
           <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="w-full px-8 py-4">
               <div className="flex items-center justify-between">
@@ -246,11 +253,12 @@ function calculateCodebaseGrade(data: RepoData) {
                 <div className="flex items-center gap-3 ml-auto">
                   <Input
                     type="text"
-                    placeholder="Enter the GitHub repo link or in the format of owner/repo"
+                    placeholder="Enter the GitHub repo link or owner/repo"
                     value={repoUrl}
                     onChange={(e) => setRepoUrl(e.target.value)}
                     onKeyPress={handleKeyPress}
                     className="w-[320px]"
+                    title="Format: https://github.com/owner/repo or owner/repo"
                   />
                   <Button onClick={handleFetchRepo} disabled={isLoading}>
                     {isLoading ? "Loading..." : "Analyze"}
@@ -259,7 +267,7 @@ function calculateCodebaseGrade(data: RepoData) {
               </div>
             </div>
           </header>
-          <main className="p-6">
+          <main className="p-6 flex-grow">
             <div className="grid mb-5 gap-6 grid-cols-1">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -426,9 +434,10 @@ function calculateCodebaseGrade(data: RepoData) {
               </Card>
             </div>
           </main>
-          <footer className="absolute bottom-0 w-full text-center text-xs text-muted-foreground py-4">
+          <footer className="w-full text-center text-xs text-muted-foreground py-4">
+          built with <a href="https://codegen.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">Codegen</a>
           </footer>
-        </>
+        </div>
       )}
     </div>
   )
