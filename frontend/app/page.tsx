@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import RepoAnalyticsDashboard from "@/components/repo-analytics-dashboard"
 
 export const metadata: Metadata = {
-  title: "Repository Analytics Dashboard",
+  title: "Codebase Analytics",
   description: "Analytics dashboard for public GitHub repositories",
 }
 
