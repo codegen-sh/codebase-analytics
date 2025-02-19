@@ -113,7 +113,7 @@ export default function RepoAnalyticsDashboard() {
       console.log("Fetching repo data...");
       // https://codegen-sh-staging--analytics-app-fastapi-modal-app.modal.run/analyze_repo
       // https://codegen-sh-staging--analytics-app-fastapi-modal-app-dev.modal.run/analyze_repo
-      const response = await fetch('https://codegen-sh-staging--analytics-app-fastapi-modal-app.modal.run/analyze_repo', {
+      const response = await fetch('https://codegen-sh--analytics-app-fastapi-modal-app.modal.run/analyze_repo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
