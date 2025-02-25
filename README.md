@@ -45,11 +45,11 @@ The frontend provides an interface for users to submit a GitHub repository and r
 
 2. Deploy or serve the Modal API:
    ```bash
-   modal serve backend/modal_main.py
+   modal serve backend/api.py
    ```
    `modal serve` runs the API locally for development, creating a temporary endpoint that's active only while the command is running.
    ```bash
-   modal deploy backend/modal_main.py
+   modal deploy backend/api.py
    ```
    `modal deploy` creates a persistent Modal app and deploys the FastAPI app to it, generating a permanent API endpoint.
    
