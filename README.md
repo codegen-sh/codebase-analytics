@@ -20,10 +20,6 @@ The following metrics are calculated:
 - `Lines of Code (LOC, SLOC, LLOC)`: Measures the number of lines of code in the codebase. LOC, SLOC, and LLOC represent the total, source, and logical lines of code, respectively. 
 - `Comment Density`: Measures the density of comments in the codebase, given as a percentage of the total lines of code. More comments can indicate better documentation.
 
-Monthly commit history is also pulled from the GitHub API and displayed in a chart.
-
-The codebase is also graded on a scale of A-F for overall quality and maintainability. The complexity of the codebase is also given a qualitative rank.
-
 ```python
 complexity = calculate_cyclomatic_complexity(func)
 operators, operands = get_operators_and_operands(func)
@@ -31,6 +27,10 @@ volume, _, _, _, _ = calculate_halstead_volume(operators, operands)
 loc = len(func.code_block.source.splitlines())
 mi_score = calculate_maintainability_index(volume, complexity, loc)
 ```
+
+Monthly commit history is also pulled from the GitHub API and displayed in a chart.
+
+The codebase is also graded on a scale of A-F for overall quality and maintainability. The complexity of the codebase is also given a qualitative rank.
 
 ### Frontend (Next.js)
 
